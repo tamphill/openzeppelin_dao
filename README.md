@@ -1,52 +1,53 @@
-<����>�����openzeppelin governor ����DAO
+<基础篇>如何用openzeppelin governor 构建DAO
 
-��Ƶ�� ��ο�Dapp learning Ƶ�����γ������Ƶ�������ĵ�
+视频： 请参考Dapp learning 频道本课程相关视频及完整文档
 https://www.youtube.com/c/DappLearning
 
-\*�ο�����
+*参考环境
 Ubuntu 20.04.2
 hardhat 2.12.2
 node16.13.1
 
-\*��������װ
-yarn
+*依赖包安装
+yarn 
 
-\*�޸ı�Ҫ����������Ŀ����ΪDEMO��;������й¶����˽Կ����ĿID��
-���ļ� hardhat.config.ts, � 滻 XXX�������Ϣ
-url: 'https://goerli.infura.io/v3/xxxxxxxxxx', //<---- ��� INFURA ��Ŀ ID! (https://app.infura.io/ ���Դ���)
-accounts: ['xxxxxxxx'], //<---- �����Կ! (���Դ�metamask ��ȡ)
+*修改必要参数（本项目仅作为DEMO用途，请勿泄露您的私钥及项目ID）
+打开文件 hardhat.config.ts, 替换XXX成你的信息
+url: 'https://goerli.infura.io/v3/xxxxxxxxxx', //<---- 你的 INFURA 项目 ID! (https://app.infura.io/ 可以创建)
+accounts: ['xxxxxxxx'],  //<---- 你的密钥! (可以从metamask 读取)
 
-\*��Լ����
+*合约编译
 yarn hardhat compile
 
-\*��������
+*本地运行
+1. 打开本地EVM
+yarn hardhat node
+2.本地部署
+yarn hardhat deploy --network localhost
+3.提案
+yarn hardhat run scripts/propose.ts --network localhost
+4.投票
+yarn hardhat run scripts/vote.ts --network localhost
+5.投票成功后排队任务
+yarn hardhat run scripts/queue.ts --network localhost
+6. 执行该排队任务
+yarn hardhat run scripts/execute.ts --network localhost
 
-1. �򿪱���EVM
-   yarn hardhat node
-   2.���ز���
-   yarn hardhat deploy --network localhost
-   3.�᰸
-   yarn hardhat run scripts/propose.ts --network localhost
-   4.ͶƱ
-   yarn hardhat run scripts/vote.ts --network localhost
-   5.ͶƱ�ɹ����Ŷ�����
-   yarn hardhat run scripts/queue.ts --network localhost
-2. ִ�и��Ŷ�����
-   yarn hardhat run scripts/execute.ts --network localhost
-
-\*Goerli ������������
-1.goerli������� 粿 ��
+*Goerli 测试网络运行
+1.goerli测试网络部署
 yarn hardhat deploy --network goerli
-2.�᰸
+2.提案
 yarn hardhat run scripts/propose.ts --network goerli
-3.ͶƱ
+3.投票
 yarn hardhat run scripts/vote.ts --network goerli
-4.ͶƱ�ɹ����Ŷ�����
-yarn hardhat run scripts/queue.ts --network goerli 5. ִ�и��Ŷ�����
+4.投票成功后排队任务
+yarn hardhat run scripts/queue.ts --network goerli
+5. 执行该排队任务
 yarn hardhat run scripts/execute.ts --network goerli
 
-\*�᰸��ͶƱ��״̬��Ϣ
-yarn hardhat console �Cnetwork localhost(/goerli)
+*提案，投票等状态信息
+yarn hardhat console –network localhost(/goerli)
+>>const governor = await ethers.getContract("GovernorContract")
+>>await governor.state(“proposalID”)  (proposalID 从文件 proposals.json 读取)
 
-> > const governor = await ethers.getContract("GovernorContract")
-> > await governor.state(��proposalID��) (proposalID ���ļ� proposals.json ��ȡ)
+
